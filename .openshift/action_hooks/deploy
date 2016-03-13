@@ -23,6 +23,6 @@ if [ -n "$OPENSHIFT_MONGODB_DB_HOST" ]; then
 	export MONGO_URL="mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/"
 fi
 
-$OPENSHIFT_DATA_DIR/apache-maven-3.3.3/bin/mvn -f $OPENSHIFT_REPO_DIR/pom.xml clean package -s $OPENSHIFT_REPO_DIR/.openshift/settings.xml
+$OPENSHIFT_DATA_DIR/apache-maven-3.3.3/bin/mvn -f $OPENSHIFT_REPO_DIR/pom.xml clean package -s $OPENSHIFT_REPO_DIR/.openshift/settings.xml -P openshift-jar
 
 nohup java -jar -Dserver.port=${OPENSHIFT_DIY_PORT} -Dserver.address=${OPENSHIFT_DIY_IP} ${OPENSHIFT_REPO_DIR}target/*.jar > ${OPENSHIFT_DIY_LOG_DIR}/application.log 2>&1 &
