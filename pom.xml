@@ -84,7 +84,7 @@
 			<!-- By default that is to put the resulting archive into the 'deployments' 
 				folder. -->
 			<!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
-			<id>openshift-jar</id>
+			<id>spring</id>
 			<build>
 				<plugins>
 					<plugin>
@@ -102,7 +102,7 @@
 			<!-- By default that is to put the resulting archive into the 'deployments' 
 				folder. -->
 			<!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
-			<id>openshift-war</id>
+			<id>openshift</id>
 			<activation>
 				<property>
 					<name>OPENSHIFT_WILDFLY_HTTP_PORT</name>
