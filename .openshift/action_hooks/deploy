@@ -1,28 +1,25 @@
-#!/bin/bash
-cd $OPENSHIFT_DATA_DIR
-
-
-
-
-if [ ! -d apache-maven-3.3.3 ]; then
-  wget http://www.eu.apache.org/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz
-  tar -zxf apache-maven-3.3.3-bin.tar.gz
-fi
-
-if [ ! -d jdk1.8.0_65 ]; then
-  wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u65-b16/jdk-8u65-linux-i586.tar.gz
-  tar -zxf jdk-8u65-linux-i586.tar.gz
-fi
-
-rm -rf apache-maven-3.3.3-bin.tar.gz*
-rm -rf jdk-8u65-linux-i586.tar.gz*
-
-export JAVA_HOME=$OPENSHIFT_DATA_DIR/jdk1.8.0_65
-export PATH=$JAVA_HOME/bin:$PATH
-if [ -n "$OPENSHIFT_MONGODB_DB_HOST" ]; then
-	export MONGO_URL="mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/"
-fi
-
-$OPENSHIFT_DATA_DIR/apache-maven-3.3.3/bin/mvn -f $OPENSHIFT_REPO_DIR/pom.xml clean package -s $OPENSHIFT_REPO_DIR/.openshift/settings.xml -P openshift-jar
-
-nohup java -jar -Dserver.port=${OPENSHIFT_DIY_PORT} -Dserver.address=${OPENSHIFT_DIY_IP} ${OPENSHIFT_REPO_DIR}target/*.jar > ${OPENSHIFT_DIY_LOG_DIR}/application.log 2>&1 &
+##!/bin/bash
+#cd $OPENSHIFT_DATA_DIR
+#
+#if [ ! -d apache-maven-3.3.3 ]; then
+#  wget http://www.eu.apache.org/dist/maven/maven-3/3.3.3/binaries/apache-maven-3.3.3-bin.tar.gz
+#  tar -zxf apache-maven-3.3.3-bin.tar.gz
+#fi
+#
+#if [ ! -d jdk1.8.0_65 ]; then
+#  wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u65-b16/jdk-8u65-linux-i586.tar.gz
+#  tar -zxf jdk-8u65-linux-i586.tar.gz
+#fi
+#
+#rm -rf apache-maven-3.3.3-bin.tar.gz*
+#rm -rf jdk-8u65-linux-i586.tar.gz*
+#
+#export JAVA_HOME=$OPENSHIFT_DATA_DIR/jdk1.8.0_65
+#export PATH=$JAVA_HOME/bin:$PATH
+#if [ -n "$OPENSHIFT_MONGODB_DB_HOST" ]; then
+#	export MONGO_URL="mongodb://$OPENSHIFT_MONGODB_DB_HOST:$OPENSHIFT_MONGODB_DB_PORT/"
+#fi
+#
+#$OPENSHIFT_DATA_DIR/apache-maven-3.3.3/bin/mvn -f $OPENSHIFT_REPO_DIR/pom.xml clean package -s $OPENSHIFT_REPO_DIR/.openshift/settings.xml -P openshift-jar
+#
+#nohup java -jar -Dserver.port=${OPENSHIFT_DIY_PORT} -Dserver.address=${OPENSHIFT_DIY_IP} ${OPENSHIFT_REPO_DIR}target/*.jar > ${OPENSHIFT_DIY_LOG_DIR}/application.log 2>&1 &

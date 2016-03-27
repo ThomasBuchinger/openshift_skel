@@ -5,7 +5,7 @@
 	<groupId>buc-framework</groupId>
 	<artifactId>openshift</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>openshift</name>
 	<url>http://maven.apache.org</url>
@@ -62,29 +62,19 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.boot</groupId> -->
-<!-- 			<artifactId>spring-boot-starter-data-mongodb</artifactId> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>de.flapdoodle.embed</groupId> -->
-<!-- 			<artifactId>de.flapdoodle.embed.mongo</artifactId> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.springframework.data</groupId> -->
-<!-- 			<artifactId>spring-data-mongodb</artifactId> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.springframework.boot</groupId> -->
+		<!-- <artifactId>spring-boot-starter-data-mongodb</artifactId> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>de.flapdoodle.embed</groupId> -->
+		<!-- <artifactId>de.flapdoodle.embed.mongo</artifactId> -->
+		<!-- </dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.springframework.data</groupId> -->
+		<!-- <artifactId>spring-data-mongodb</artifactId> -->
+		<!-- </dependency> -->
 	</dependencies>
-
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
 	<profiles>
 		<profile>
 			<!-- When built in OpenShift the 'openshift' profile will be used when 
@@ -113,13 +103,26 @@
 				folder. -->
 			<!-- http://maven.apache.org/guides/mini/guide-building-for-different-environments.html -->
 			<id>openshift-war</id>
+			<activation>
+				<property>
+					<name>OPENSHIFT_WILDFLY_HTTP_PORT</name>
+					<value>8080</value>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+					<groupId>org.springframework.boot</groupId>
+					<scope>provided</scope>
+				</dependency>
+			</dependencies>
 			<build>
 				<plugins>
 					<plugin>
 						<artifactId>maven-war-plugin</artifactId>
 						<version>2.2</version>
 						<configuration>
-							<outputDirectory>deployments</outputDirectory>
+							<outputDirectory>deployment</outputDirectory>
 							<warName>ROOT</warName>
 						</configuration>
 					</plugin>
